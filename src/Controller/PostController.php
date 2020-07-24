@@ -47,7 +47,7 @@ final class PostController {
         $res['keywords'] = array_map(function ($arr) { return $arr['name']; }, $res['keywords']);
         $res['category'] = $res['category']['name'];
         $res['created_by'] = $res['created_by']['firstname']." ".$res['created_by']['lastname'];
-        return $response->withJson($res);
+        return $response->withJson($res)->withHeader('Access-Control-Allow-Origin', '*');
     }
 
     /**
@@ -68,7 +68,7 @@ final class PostController {
         $user = $request->getAttribute('user');
         $this->createPost($postData, $user);
         
-        return $response->withJson(['message' => 'Post created successfully.'], 201);
+        return $response->withJson(['message' => 'Post created successfully.'], 201)->withHeader('Access-Control-Allow-Origin', '*');
     }
 
     /**
@@ -132,7 +132,7 @@ final class PostController {
             throw new \DomainException("You're not allowed to update a post that you did not create.");
         }
         $post->update($request->getParsedBody());
-        return $response->withJson(['message' => 'Post updated successfully.'], 200);
+        return $response->withJson(['message' => 'Post updated successfully.'], 200)->withHeader('Access-Control-Allow-Origin', '*');
     }
 
     /**
@@ -151,7 +151,7 @@ final class PostController {
             throw new \DomainException("You're not allowed to delete a post that you did not create.");
         }
         $post->delete();
-        return $response->withJson(['message' => 'Post successfully deleted.'], 200);
+        return $response->withJson(['message' => 'Post successfully deleted.'], 200)->withHeader('Access-Control-Allow-Origin', '*');
     }
 
     /**
