@@ -32,7 +32,7 @@ final class AuthController {
             return $response->withJson(['message' => 'Email or Password not valid.'], 401);
         }
         
-        return $response->withJson(['token' => $this->generateToken($user->id)]);
+        return $response->withJson(['token' => $this->generateToken($user->id)])->withHeader('Access-Control-Allow-Origin', '*');
     }
 
     /**
@@ -67,7 +67,7 @@ final class AuthController {
         $blacklistedToken = new BlacklistedToken();
         $blacklistedToken->token_jti = $request->getAttribute('token_jti');
         $user->blacklistedTokens()->save($blacklistedToken);
-        return $response->withJson(['message' => 'Logout Successful'], 200);
+        return $response->withJson(['message' => 'Logout Successful'], 200)->withHeader('Access-Control-Allow-Origin', '*');
     }
 
      /**
@@ -100,7 +100,7 @@ final class AuthController {
                     'role'     => 'member',
                 ]);
         
-        return $response->withJson(['message' => 'User successfully created.'], 201);
+        return $response->withJson(['message' => 'User successfully created.'], 201)->withHeader('Access-Control-Allow-Origin', '*');
     }   
 
      /**
